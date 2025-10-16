@@ -1,0 +1,30 @@
+<!-- # To Do:
+# decide on a topic, probably a to-do list app that 'gameifies' your to-do
+# have you pick a pet, cat or dog
+# make one page
+# make sure it runs
+# site uses template inheritance
+# make one form
+# submit site by link to repository
+# implement a database -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flask Gameify My ToDo{% endblock %}</title>
+</head>
+<body>
+    <header>
+        {% block redirects %} {% endblock %}
+        {% block theheader %} {% endblock %}
+    </header>
+    <main>
+        {% block content %} {% endblock %}
+    </main>
+    <footer>
+        <p>Flask Gameify My ToDo -- Flask + Jinja -- CWEB1116-01</p>
+    </footer>
+</body>
+</html>

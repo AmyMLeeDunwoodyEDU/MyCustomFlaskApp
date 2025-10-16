@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} - Admin View {% endblock %}
+
+{% block content %} 
+<h1>All Accounts Made</h1>
+
+<a href="{{url_for('admin_Player_deleteFirst')}}">Delete First User (Example)</a>
+<br>
+<br>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Pet Name</th>
+        <th>Preferred Pet</th>
+        <th>Raw Date Created</th>
+        <th>Americanized Date Created</th>
+        <th>Delete</th>
+    </tr>
+    {% for player in players %}
+    <tr>
+        <th>{{ player.id }}</th>
+        <th>{{ player.namedpet }}</th>
+        <th>{{ player.pickedpet }}</th>
+        <th>{{ player.datecreated }}</th>
+        <th> {{ player.datecreated.astimezone(get_localzone()).strftime('%m/%d/%Y, %I:%M:%S %p')}} </th>
+        <th>
+            <form method="POST" action="{{url_for('admin_Player_DeleteButton')}}">
+                <input name="playerID" value="{{player.id}}" type="hidden" id="playerID">
+                <input type="submit" value="Delete">
+            </form>
+        </th>
+    </tr>
+    {%endfor%}
+</table>
+
+{% endblock %}

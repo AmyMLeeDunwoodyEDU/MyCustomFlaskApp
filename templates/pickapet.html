@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %} Flask - Pick To-Do List Pet {% endblock %}
+
+{% block redirects %} 
+
+    <a href="{{url_for('adminView')}}">Admin View</a>
+
+{% endblock %}
+
+{% block theheader %}
+
+    <h1>Choose a Pet to Raise.</h1>
+
+{% endblock %}
+
+{% block content %}
+
+    <p>Pick your pet, name it and press the Submit button to choose your pet.</p>
+    <form action="{{url_for('pickapet')}}" method="POST">
+        <pre>
+ _._     _,-'""`-._
+[,-.`._,'(       |\`-/|
+    `-.-' \ )-`( , o o)
+          `-    \`_`"'-
+        </pre>
+        <label for="Cat">Cat</label>
+        <input type="radio" id="Cat" name="pickedpet" value="Cat">
+        <pre>
+ /^ ^\
+/ 0 0 \
+V\ Y /V
+ / - \
+ |    \
+ || [__V
+        </pre>
+        <label for="Dog">Dog</label>
+        <input type="radio" id="Dog" name="pickedpet" value="Dog">
+        <br>
+        <br>
+        <label for="name">Name Your New Pet</label>
+        <input type="text" id="Name" name="namedpet" value="Name">
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if pickedpet == 'Cat' %}
+    <p>You adopted a cat, and named it {{namedpet}}. Congratulations!</p>
+    <p>Click this button to proceed.</p>
+    <a class="yourNewPet" href="{{url_for('yourPet')}}">Continue</a>
+    {% elif pickedpet == 'Dog' %}
+    <p>You adopted a dog, and named it {{namedpet}}. Congratulations!</p>
+    <p>Click this button to proceed.</p>
+    <a class="yourNewPet" href="{{url_for('yourPet')}}">Continue</a>
+    {%endif%}
+
+{% endblock %}
