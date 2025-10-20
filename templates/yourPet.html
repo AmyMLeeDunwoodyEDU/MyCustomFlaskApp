@@ -14,7 +14,7 @@
     <p>The time is {{time}}.</p>
 
     {%if cat%}
-        <h1>This is your {{data.choice}}, {{data.name}}.</h1>
+        <h1>This is your {{player.pickedpet}}, {{player.namedpet}}.</h1>
         <br>
         <pre>
  _._     _,-'""`-._
@@ -23,16 +23,16 @@
           `-    \`_`"'-
         </pre>
 
-        <p>{{newuser}}</p>
+        <p>To take care of your pet, you must complete your tasks. Every time you complete a task, you get currency to buy your pet the things it needs to survive. Every stat goes down once in a while. Your job is to keep these stats as high as you can whilst managing resources.</p>
         <br>
-        <p>{{data.name}}'s Stats:</p>
+        <p>{{player.namedpet}}'s Stats:</p>
         <p>Hunger: {{hunger}}</p>
         <p>Health: {{health}}</p>
         <p>Sleep: {{sleep}}</p>
         <p>Fun: {{fun}}</p>
 
     {%else%}
-        <h1>This is your {{data.pickedpet}}, {{data.namedpet}}.</h1>
+        <h1>This is your {{player.pickedpet}}, {{player.namedpet}}.</h1>
         <br>
         <pre>
  /^ ^\
