@@ -23,8 +23,7 @@ class player_stats(db.Model):
     datecreated = db.Column(db.DateTime(timezone=True), default=datetime.now(timezone.utc))
     #store hunger, fun, sleep, and health values into here if the person closes the app
     #basically have a save data sort of kind of system
-    #have a log-in system so the user can use an old save-file
-    #if the username and or passwords don't match, have an alert pop up and have it say "username/password invalid" depending on what is entered in.
+        #have a log-in system so the user can use an old save-file
     
 with app.app_context():
     db.create_all()
@@ -46,8 +45,8 @@ def pickapet():
         
         if form_type == "login":
             pass
-            # summary: make it so the player if they are registered already is able to continue their game
-            # pseudocode: if player registered, redirect to yourPet but with their data at a saved point of the game.
+            # summary: make it so the player if they are registered already is able to continue their game.
+            # pseudocode: if player registered, redirect to yourPet, but with their data at a saved point of the game.
         
         if form_type == "pickingapet":    
             if pickedpet == 'Dog':
