@@ -16,8 +16,9 @@
 
 {% block content %}
 
-    <p>Pick your pet, name it and press the Submit button to choose your pet.</p>
+    <p>Pick your pet, name it, and make a username and password to save your data. Once you are done, press the submit button.</p>
     <form action="{{url_for('pickapet')}}" method="POST">
+        <input type="hidden" name="form_name" value="pickingapet">
         <pre>
  _._     _,-'""`-._
 [,-.`._,'(       |\`-/|
@@ -40,8 +41,30 @@ V\ Y /V
         <br>
         <label for="name">Name Your New Pet</label>
         <input type="text" id="Name" name="namedpet" value="Name">
+        <br>
+        <label for="username">Enter in a Username</label>
+        <input type="text" id="Username" name="username" value="Username" required>
+        <label for="password">Enter in a Password</label>
+        <input type="text" id="Password" name="password" value="Password" required>
         <input type="submit" value="Submit">
     </form>
+
+    <h1>Already owned a pet previously? Log in here.</h1>
+
+    <form action="{{url_for('pickapet')}}" method="POST">
+
+        <input type="hidden" name="form_name" value="login">
+        <label for="username"></label>
+        <input type="text" id="Username" name="username" value="Username" required>
+        <label for="password">Enter in a Password</label>
+        <input type="text" id="Password" name="password" value="Password" required>
+        <input type="submit" value="Submit">
+    
+    </form>
+
+    {% if error %}
+    <p>{{error}}</p>
+    {% endif %}
 
     {% if pickedpet == 'Cat' %}
     <p>You adopted a cat, and named it {{namedpet}}. Congratulations!</p>

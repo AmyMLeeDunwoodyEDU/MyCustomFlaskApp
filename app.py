@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from datetime import datetime, timezone
 from flask_sqlalchemy import SQLAlchemy
 from tzlocal import get_localzone
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -15,10 +17,14 @@ db = SQLAlchemy(app)
 class player_stats(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     namedpet = db.Column(db.String(100), nullable=True)
+    username = db.Column(db.String(100), nullable=True, unique=True)
+    password = db.Column(db.String(100), nullable=True)
     pickedpet = db.Column(db.String(50), nullable=True)
     datecreated = db.Column(db.DateTime(timezone=True), default=datetime.now(timezone.utc))
     #store hunger, fun, sleep, and health values into here if the person closes the app
-    #basically have a save data sort of kind of system i dont know anymore im tired
+    #basically have a save data sort of kind of system
+    #have a log-in system so the user can use an old save-file
+    #if the username and or passwords don't match, have an alert pop up and have it say "username/password invalid" depending on what is entered in.
     
 with app.app_context():
     db.create_all()
@@ -31,22 +37,38 @@ def pickapet():
     if request.method == 'POST':
         pickedpet = request.form.get('pickedpet', '').strip()
         namedpet = request.form.get('namedpet', '').strip()
-            
-        if pickedpet == 'Dog':
-            new_player = player_stats(
-                namedpet=namedpet,
-                pickedpet=pickedpet,
-                )
-            db.session.add(new_player)
-            db.session.commit()
-        if pickedpet == 'Cat':
-            new_player = player_stats(
-                namedpet=namedpet,
-                pickedpet=pickedpet
-                )
-            db.session.add(new_player)
-            db.session.commit()
-    return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet, player_stats=player_stats)
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '').strip()
+        form_type = request.form.get('form_name').strip()
+        
+        if player_stats.query.filter_by(username=username).first():
+            error = f"Username already exists."
+        
+        if form_type == "login":
+            pass
+            # summary: make it so the player if they are registered already is able to continue their game
+            # pseudocode: if player registered, redirect to yourPet but with their data at a saved point of the game.
+        
+        if form_type == "pickingapet":    
+            if pickedpet == 'Dog':
+                new_player = player_stats(
+                    namedpet=namedpet,
+                    pickedpet=pickedpet,
+                    username=username,
+                    password=password
+                    )
+                db.session.add(new_player)
+                db.session.commit()
+            if pickedpet == 'Cat':
+                new_player = player_stats(
+                    namedpet=namedpet,
+                    pickedpet=pickedpet,
+                    username=username,
+                    password=password
+                    )
+                db.session.add(new_player)
+                db.session.commit()
+        return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet, player_stats=player_stats, error=error)
 
 @app.route('/yourPet')
 def yourPet():
