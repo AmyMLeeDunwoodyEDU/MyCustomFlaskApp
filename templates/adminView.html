@@ -8,6 +8,7 @@
 <table>
     <tr>
         <th>ID</th>
+        <th>Username</th>
         <th>Pet Name</th>
         <th>Preferred Pet</th>
         <th>Raw Date Created</th>
@@ -17,6 +18,7 @@
     {% for player in players %}
     <tr>
         <th>{{ player.id }}</th>
+        <th>{{ player.username }}</th>
         <th>{{ player.namedpet }}</th>
         <th>{{ player.pickedpet }}</th>
         <th>{{ player.datecreated }}</th>

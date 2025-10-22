@@ -40,8 +40,10 @@ def pickapet():
         password = request.form.get('password', '').strip()
         form_type = request.form.get('form_name').strip()
         
-        if player_stats.query.filter_by(username=username).first():
+        if player_stats.query.filter_by(username=username).count() > 0:
             error = f"Username already exists."
+            return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet, error=error)
+
         
         if form_type == "login":
             pass
@@ -67,7 +69,10 @@ def pickapet():
                     )
                 db.session.add(new_player)
                 db.session.commit()
-        return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet, player_stats=player_stats, error=error)
+            
+        new_player = player_stats.query.filter_by(username=username).first()
+        return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet, player_stats=new_player)
+    return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet)
 
 @app.route('/yourPet')
 def yourPet():
@@ -103,6 +108,7 @@ def yourPet():
                         db.session.delete(user)
                         db.session.commit()
                         return redirect('pickapet.html')
+                    # have an "oh no you didn't feed your pet enough. they ran away from home."
                     # delete the user if the pet has 0 health via hunger
 
         while sleep > 0:
@@ -114,6 +120,7 @@ def yourPet():
                         db.session.delete(user)
                         db.session.commit()
                         return redirect('pickapet.html')
+                    # have an "oh no you didn't have your pet rest enough. they ran away from home."
                     # delete the user if the pet has 0 health via sleep
 
         while fun > 0:
@@ -122,9 +129,10 @@ def yourPet():
                 db.session.delete(user)
                 db.session.commit()
                 return redirect('pickapet.html')
+            # have an "oh no you didn't play with your pet, they ran away from home."
             # delete the user if the pet has 0 fun
 
-    return render_template("yourPet.html", newuser=newuser, day=current_day, year=current_year, data=data, month=current_month, time=current_time)
+    return render_template("yourPet.html", day=current_day, year=current_year, data=data, month=current_month, time=current_time)
 
 @app.route('/adminView')
 def adminView():
