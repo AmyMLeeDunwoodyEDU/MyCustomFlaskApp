@@ -38,10 +38,11 @@ def pickapet():
         namedpet = request.form.get('namedpet', '').strip()
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '').strip()
-        form_type = request.form.get('form_name').strip()
+        form_type = request.form.get('form_name').strip() 
         
-        if player_stats.query.filter_by(username=username).first():
+        if player_stats.query.filter_by(username=username).count() > 0:
             error = f"Username already exists."
+            return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet, error=error)
         
         if form_type == "login":
             pass
@@ -67,7 +68,9 @@ def pickapet():
                     )
                 db.session.add(new_player)
                 db.session.commit()
-        return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet, player_stats=player_stats, error=error)
+        new_player = player_stats.query.filter_by(username=username).first()
+        return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet, player_stats=new_player)
+    return render_template("pickapet.html", pickedpet=pickedpet, namedpet=namedpet)
 
 @app.route('/yourPet')
 def yourPet():
