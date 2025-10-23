@@ -76,6 +76,11 @@ def pickapet():
 
 @app.route('/yourPet')
 def yourPet():
+    
+    #this part of the site crashes because of line #95.
+    #the main intent was to have the pets needs drop once every like 30 or so seconds when playing with the pet, maybe up to a minute depending
+    #in the future i think i want the player to have a maximum of 2 pets but that'll be difficult to program so not right now.
+    
     now = datetime.now()
     current_year = now.year
     current_month = now.strftime("%B")
